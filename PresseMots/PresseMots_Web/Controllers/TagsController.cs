@@ -1,6 +1,9 @@
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using PresseMots.Models;
 using PresseMots.Models.Data;
 
 namespace PresseMots.Controllers
@@ -17,7 +20,8 @@ namespace PresseMots.Controllers
         // GET: Tags
         public async Task<IActionResult> Index()
         {
-              return View(/*...*/);
+            var listTaG = await _context.Tags.ToListAsync();
+            return View(listTaG);
         }
 
         // GET: Tags/Create
@@ -27,25 +31,31 @@ namespace PresseMots.Controllers
         }
 
         // POST: Tags/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(Object model/*[Bind("Id,Name")] Tag tag*/)
+        public async Task<IActionResult> Create([Bind("Id,Name")] Tag tag)
         {
             if (ModelState.IsValid)
             {
-                /*?*/
+                _context.Add(tag);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
             }
-            return View(/*...*/);
+
+            return View(tag);
         }
 
         // GET: Tags/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-           /*..?*/
+            var LeTag = await _context.Tags.FirstOrDefaultAsync(t =>t.Id == id);
 
-            return View(/*..*/);
+            if (LeTag == null)
+            {
+                return NotFound();
+            }
+
+            return View(LeTag);
         }
 
         // POST: Tags/Delete/5
@@ -53,9 +63,17 @@ namespace PresseMots.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            /*...*/
+            var DelTag = await _context.Tags.FindAsync(id);
+
+            if (DelTag == null) {
+                return NotFound();
+            }
+
+            _context.Tags.Remove(DelTag);
+            await _context.SaveChangesAsync();
 
             return RedirectToAction(nameof(Index));
+
         }
     }
 }

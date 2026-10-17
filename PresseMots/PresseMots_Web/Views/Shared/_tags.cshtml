@@ -1,10 +1,10 @@
-﻿@* @model PresseMots.Models.Story
+﻿@model PresseMots.Models.Story
 
 @foreach (var item in @Model.StoryTags)
 {
     <span class="badge badge-secondary">
         @item.Tag.Name    &nbsp;&nbsp;
-        <a class="badge badge-danger badge-pill" CODE À COMPLÉTER >&nbsp;×&nbsp;</a>
+        <a class="badge badge-danger badge-pill" asp-controller="StoryTags" asp-action="Delete" asp-route-id="@item.Id">&nbsp;×&nbsp;</a>
     </span>
 
-} *@
+}

@@ -19,6 +19,8 @@
             </div>
             <div class="card-text" >
                 @Html.DisplayFor(modelItem => item.Content)
+                <partial name="_tags" model="item"/>
+
             </div>
             <div class="panel-footer">
 
@@ -34,14 +36,14 @@
 
                 <hr />
                 <a asp-action="Index" asp-route-storyId="@item.Id" asp-controller="Comments">@item.Comments.Where(x => !x.Hidden).Count() commentaire(s)</a> |
-                <a asp-action="Edit" asp-route-id="@item.Id">Modifier</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Supprimer</a>
+                <a asp-action="Edit" asp-route-Id="@item.Id">Modifier</a> |
+                <a asp-action="Delete" asp-route-Id="@item.Id">Supprimer</a> |
+                <a asp-action="Create" asp-controller="StoryTags" asp-route-storyId="@item.Id">Ajouter une étiquette</a>
+
             </div>
         </div>
     </div>
     <br/>
 }
+    <p><a asp-action="Create">Nouvel article</a></p>
 
-<p>
-    <a asp-action="Create">Nouvel article</a>
-</p>

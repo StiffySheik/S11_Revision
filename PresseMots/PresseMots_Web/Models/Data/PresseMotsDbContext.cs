@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using PresseMots.Models;
 
 
 namespace PresseMots.Models.Data
@@ -15,6 +14,8 @@ namespace PresseMots.Models.Data
         public DbSet<Story> Stories { get; set; }
         public DbSet<Like> Likes { get; set; }
         public DbSet<Share> Shares { get; set; }
+        public DbSet<Tag> Tags { get; set; }
+        public DbSet<StoryTag> StoryTags { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
